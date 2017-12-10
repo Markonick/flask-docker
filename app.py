@@ -17,7 +17,7 @@ def index():
     count = redis.incr('hits')
     return 'Hello Pappefi and Markonick! You guys have been seen {} times.\n'.format(count)
 
-@app.route('/csvresults')
+@app.route('/results')
 def csv_results():
     template = 'csvresults.html'
     object_list = get_csv()
