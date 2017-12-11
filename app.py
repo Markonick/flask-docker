@@ -14,7 +14,8 @@ def get_csv():
 
 
 @app.route('/')
-def home():
+@app.route('/home')
+def index():
     count = redis.incr('hits')
     template = 'home.html'
     return render_template(template, title = "Home", count=count)
@@ -32,6 +33,13 @@ def upload_file():
     count = redis.incr('hits')
     template = 'upload.html'
     return render_template(template)
+
+
+@app.route('/analysis_results')
+def analysis_results():
+    count = redis.incr('hits')
+    template = 'analysis_results.html'
+    return render_template(template, title = "Analysis Results", count=count)
 
 
 @app.route('/contact')

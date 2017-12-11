@@ -63,9 +63,9 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{{ url_for('/') }}">Home</a></li>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="{{ url_for('upload_file') }}">Upload</a></li>
-        <li><a href="Analysis">Analysis Results</a></li>
+        <li><a href="{{ url_for('analysis_results') }}">Analysis Results</a></li>
         <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
     </div>
