@@ -1,15 +1,17 @@
 from flask import Flask
 from flask import render_template
 from redis import Redis
-import pandas as pd
+#import pandas as pd
 
 app = Flask(__name__)
 redis = Redis(host='redis', port=6379)
 
+
 def get_csv():
     csv_path = './static/labels.csv'
-    data = pd.read_csv(csv_path)
-    csv_list = list(data)
+    csv_file = open(csv_path, 'r')
+    csv_obj = csv.DictReader(csv_file)
+    csv_list = list(csv_obj)
     return csv_list
 
 @app.route('/')
@@ -25,4 +27,4 @@ def csv_results():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", debug=True)
+    app.run(host="0.0.0.0", debug=True)
