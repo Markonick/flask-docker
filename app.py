@@ -19,7 +19,7 @@ def get_csv():
 def index():
     count = redis.incr('hits')
     template = 'home.html'
-    return render_template(template, object=count)
+    return render_template(template, title = "Home", count=count)
 
 
 @app.route('/tables')
