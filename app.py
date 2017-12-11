@@ -10,26 +10,23 @@ redis = Redis(host='redis', port=6379)
 
 def get_csv():
     path = './app/static/labels.csv'
-    """csv_file = open(csv_path, 'r')
-    csv_obj = csv.DictReader(csv_file)"""
     df = pd.read_csv(path)
-    csv_obj = list(df)
-    csv_list = list(csv_obj)
 
-    return csv_list
+    return df
 
 
 @app.route('/')
 def index():
     count = redis.incr('hits')
-    return 'Hello Pappefi and Markonick! You guys have now been seen {} times.\n'.format(count)
+    template = 'home.html'
+    return render_template(template, object=count)
 
 
-@app.route('/results')
-def csv_results():
-    template = 'results.html'
-    object_list = get_csv()
-    return render_template(template, object_list=object_list)
+@app.route('/tables')
+def show_table():
+    template = 'csvtable.html'
+    df = get_csv()
+    return render_template(template, object_list=df.to_html())
 
 
 if __name__ == "__main__":

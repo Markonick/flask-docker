@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends "base.html" %}
+    <head>
+    <title>Uploaded CSV Results</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+        <div class="container">
+        <h2>Results from CSV file</h2>
+        <p>This page tabulates the results from the uploaded results CSV file</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>FileId</th>
+                    <th>GT</th>
+                    <th>Malignant prediction 0</th>
+                    <th>Malignant prediction 1</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for obj in object_list %}
+                    <tr>
+                        <td>{{ obj.fileid }}</td>
+                        <td>{{ obj.malignant }}</td>
+                        <td>{{ obj.malignant_pred0 }}</td>
+                        <td>{{ obj.malignant_pred1 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>
+
