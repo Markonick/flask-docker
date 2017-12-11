@@ -18,16 +18,10 @@
         max-height: 200%;
         padding-bottom: 15px;
     }
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {
-        background-color: #e22727;
-        height: 450px;
-    }
     
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
-      background-color: #f1f1f1;
       height: 100%;
     }
     
@@ -43,6 +37,10 @@
         position:relative;
         font-size: 10px;
         float: right;
+    }
+
+    [hidden] {
+      display: none !important;
     }
     
     a {
@@ -65,10 +63,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Upload</a></li>
-        <li><a href="#">Anaylsis Results</a></li>
-        <li><a href="#">Contact</a></li>
+        <li class="active"><a href="{{ url_for('/') }}">Home</a></li>
+        <li><a href="{{ url_for('upload_file') }}">Upload</a></li>
+        <li><a href="Analysis">Analysis Results</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -82,10 +80,8 @@
       <p><a href="#">Link</a></p>
     </div>
     <div class="col-sm-4 text-left"> 
-      <h1>Welcome</h1>
-      
     {% block content %}{% endblock %}
-      <hr>
+      <hr align="left" width="200%">
       <h3>Test</h3>
       <p>Lorem ipsum...</p>
     </div>
