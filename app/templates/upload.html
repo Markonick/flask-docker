@@ -2,64 +2,32 @@
 
 {% block content %}
 
-    <style>
-        .btn-margin-top {
-            margin-top: 40px;
-        }
-    </style>
-
-    <div class="container">
-        <div class="col-md-8 col-md-offset-2">
-            <form method="POST" action="#" enctype="multipart/form-data">
-                <!-- COMPONENT START -->
-                <div class="form-group">
-                    <div class="input-group input-file btn-margin-top" name="myforms">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary btn-choose" type="button">Choose</button>
-                        </span>
-                        <input type="text" class="form-control" placeholder='Choose a label csv file...' />
-                    </div>
-                </div>
-                <!-- COMPONENT END -->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success pull-right">Submit</button>
-                    <button type="reset" class="btn btn-danger">Reset</button>
-                </div>
-            </form>
-        </div>
-    </div>
-     
-    
-    <script>
-    function bs_input_file() {
-        $(".input-file").before(
-            function() {
-                if ( ! $(this).prev().hasClass('input-ghost') ) {
-                    var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
-                    element.attr("name",$(this).attr("name"));
-                    element.change(function(){
-                        element.next(element).find('input').val((element.val()).split('\\').pop());
-                    });
-                    $(this).find("button.btn-choose").click(function(){
-                        element.click();
-                    });
-                    $(this).find("button.btn-reset").click(function(){
-                        element.val(null);
-                        $(this).parents(".input-file").find('input').val('');
-                    });
-                    $(this).find('input').css("cursor","pointer");
-                    $(this).find('input').mousedown(function() {
-                        $(this).parents('.input-file').prev().click();
-                        return false;
-                    });
-                    return element;
-                }
-            }
-        );
+<style>
+    #browsebutton {
+        background-color: white;
     }
-    $(function() {
-        bs_input_file();
-    });
-    </script>
+    
+    #my-file-selector {
+        display: none;
+    }
+</style>
 
+<div class="row">
+    <form class="form-inline center-block" action="/" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            <label id="browsebutton" class="btn btn-default input-group-addon" for="my-file-selector">
+                {{ form.input_file(id="my-file-selector") }}
+                Browse...
+            </label>
+            <input type="text" class="form-control" readonly>
+        </div>
+        {{ form.submit(class_="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('.static', filename='js/inputFileButton.js') }}" ></script>
 {% endblock %}

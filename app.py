@@ -3,10 +3,12 @@ from flask import render_template, redirect, url_for, request
 from werkzeug import secure_filename
 from redis import Redis
 import pandas as pd
+from app.forms import UploadForm
 
 
 app = Flask(__name__, template_folder='app/templates')
 redis = Redis(host='redis', port=6379)
+
 
 def get_csv():
     path = './app/static/labels.csv'
@@ -35,12 +37,14 @@ def upload():
     return render_template(template)
 
 
-@app.route('/uploader')
+@app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
-   if request.method == 'POST':
-      f = request.files['file']
-      f.save(secure_filename(f.filename))
-      return 'file uploaded successfully'
+    form = UploadForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        input_file = request.files['input_file']
+        # Do stuff
+    else:
+        return render_template('index.html', form=form)
 
 
 @app.route('/analysis_results')
@@ -55,6 +59,7 @@ def contact():
     count = redis.incr('hits')
     template = 'contact.html'
     return render_template(template, title = "Contacts", count=count)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
