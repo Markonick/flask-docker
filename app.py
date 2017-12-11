@@ -1,5 +1,6 @@
 from flask import Flask
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
+from werkzeug import secure_filename
 from redis import Redis
 import pandas as pd
 
@@ -29,10 +30,17 @@ def show_table():
 
 
 @app.route('/upload')
-def upload_file():
-    count = redis.incr('hits')
+def upload():
     template = 'upload.html'
     return render_template(template)
+
+
+@app.route('/uploader')
+def upload_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      return 'file uploaded successfully'
 
 
 @app.route('/analysis_results')
